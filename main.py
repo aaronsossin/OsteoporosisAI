@@ -157,7 +157,7 @@ def plot_result(original, result, savename):
     axes[3].set_xlabel("Hounsfield Unit (Hu)")
     axes[3].set_ylabel("Frequency")
     plt.tight_layout()
-    plt.savefig("/oak/stanford/groups/zihuai/fredlu/MpraScreen/aaron_AD/hail/Results/" + str(savename) + "result_type2.png")
+    plt.savefig("/oak/stanford/groups/zihuai/fredlu/MpraScreen/aaron_AD/hail/Results/Kis" + savename + ".png")
     plt.clf()
 
 # Run implementations and gather results
@@ -168,13 +168,12 @@ for clusters in range(k):
         print(mnames[i], "---------------------------------")
         img = X.reshape(512 * 512 * num_images,1)
         clf = m.fit(img)
-        print("DONE") 
         print("K = ", clusters, "Inertia = ", "{:e}".format(m.inertia_))
 
     # Evaluate Trained Model
     for x in range(0,50):
         result = clf.predict(test_X[:,:,x].reshape(512 * 512,1)).reshape(512,512)
-        plot_result(test_X[:,:,x],result, x)
+        plot_result(test_X[:,:,x],result, mnames[i] + "_Kis" + str(x))
         
 
 # Determines optimal 'k' clusters for task at hand
