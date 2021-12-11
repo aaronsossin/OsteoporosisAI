@@ -1,6 +1,6 @@
 # OsteoporosisAI
 
-Diagnosing Bone Quality in an Unsupervised Approach from CT Scans
+We investigate the segmentation of CT scans in order to classify bone density as belonging to varying degrees of brittleness.  Patients with osteoporosis, a condition of weakened and brittle bones, may suffer from worse outcomes after rib fractures, such as higher mortality and longer hospitalization. They also may suffer from more rib fractures after sustaining the same injury (e.g. ground level fall). Yet, the association between osteoporosis and rib fractures remains unclear. Moreover, there are a lack of studies regarding unsupervised segmentation for detecting osteoporosis, where obtaining masks is time intensive and costly. We thus propose several unsupervised methods for detecting bone density and osteoporosis. These models can be used in clinical settings to help make sense of the CT scans, as well as serve as a backbone in semi-supervised classification with hard-to-find labelled CT scans to create a robust classifier.
 
 #Raw CT Image
 
