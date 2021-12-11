@@ -26,6 +26,7 @@ directory="/home/groups/jdf1/project_images2/1.2.840.4267.32.4079988302460039784
 directory2 = "/home/groups/jdf1/classification_10percData/1.2.840.4267.32.1182956769738561669133563954341155437/"
 
 # Hyper-parameters
+deep_learning_file_segregation = False
 perform_elbow_analysis = False
 preprocess_from_scratch=False
 num_images = 12
@@ -129,10 +130,31 @@ def generate_new_models(clusters=5,algo="elkan"):
 
 # Skeleton for deep learning unsupervised approach
 
-#model = MobileNet(weights="imagenet",dropout=0.5,include_top=False,input_shape=(512,512,3))
-#model.summary()
-#features = model.predict(X[:,:,1])
-#print(features.shape)
+if deep_learning_file_segregation:
+
+    #Generating Pretrained MobileNet model
+    model = MobileNet(weights="imagenet",dropout=0.5,include_top=False,input_shape=(512,512,3))
+
+    #Using pretrained model to get features from images
+    feature_dictionary = dict()
+
+    model.summary()
+    for x in range(X.shape[2]):
+        img = X[:,:,x].reshape(512,512,1)
+        feature_dictionary[x] = model.predict(np.stack([img,img,img]))
+
+    print(features.shape)
+    #Reduce feature space using PCA
+    only_features = feature_dictionary.values().reshape(-1,4096)
+    pca = PCA(n_components = 150)
+    pca.fit(only_features)
+
+    x = pca.transform(only_features)
+
+    
+    m = KMeans(n_clusters=50)
+    m.fit(X)
+    m.labels_ #now segregates each image into a different folder!!!!!!!!!
 
 
 # Plot original vs. segmented prediction
