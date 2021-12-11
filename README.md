@@ -6,15 +6,15 @@ We investigate the segmentation of CT scans in order to classify bone density as
 
 Please feel free to reach out at sosaar@stanford.edu for any inquiries :) For privacy purposes, the data is not available here, but we can share it upon request!
 
-#Raw CT Image
+# Raw CT Image
 
 ![unproessed](https://user-images.githubusercontent.com/35357246/145663903-d585143c-6001-4e3c-95a0-31fbdfa5f6c5.png)
 
-#Preprocessed CT Image
+# Preprocessed CT Image
 
 ![preprocessed](https://user-images.githubusercontent.com/35357246/145663905-67d9a11e-6b62-4956-8714-a1a7ae1aad52.png)
 
-#Elbow Analayis on Optimal "K" Clusters
+# Elbow Analayis on Optimal "K" Clusters
 
 ![elbow](https://user-images.githubusercontent.com/35357246/145663932-ed45c9cc-adb6-4b04-b47f-96a905e10ae5.png)
 
