@@ -115,9 +115,12 @@ X = load_files()
 X = X.astype('float32')
 X = X.reshape(512,512,num_images)
 
+X_train = X[:,:,0:int(X.shape[2] * 0.95)]
+X_test = X[:,:,int(X.shape[2] * 0.95):]
+
 # Hisogram of pixel distributoin after preprocessing
 plt.figure()
-plt.hist(X.flatten(),bins=100)
+plt.hist(X_train.flatten(),bins=100)
 plt.xlabel("Hounsfield Unit (Hu)")
 plt.ylabel("Frequency")
 plt.savefig("Results/1.png")
@@ -139,8 +142,8 @@ if deep_learning_file_segregation:
     feature_dictionary = dict()
 
     model.summary()
-    for x in range(X.shape[2]):
-        img = X[:,:,x].reshape(512,512,1)
+    for x in range(X_train.shape[2]):
+        img = X_train[:,:,x].reshape(512,512,1)
         feature_dictionary[x] = model.predict(np.stack([img,img,img]))
 
     print(features.shape)
@@ -151,10 +154,12 @@ if deep_learning_file_segregation:
 
     x = pca.transform(only_features)
 
-    
+
     m = KMeans(n_clusters=50)
-    m.fit(X)
-    m.labels_ #now segregates each image into a different folder!!!!!!!!!
+    m.fit(x)
+    print(m.labels_) #now segregates each image into a different folder!!!!!!!!!
+
+    # Code for segregating into folders
 
 
 # Plot original vs. segmented prediction
@@ -188,14 +193,14 @@ for clusters in range(k):
     mnames, models = generate_new_models()
     for i,m in enumerate(models):
         print(mnames[i], "---------------------------------")
-        img = X.reshape(512 * 512 * num_images,1)
+        img = X_train.reshape(512 * 512 * num_images,1)
         clf = m.fit(img)
         print("K = ", clusters, "Inertia = ", "{:e}".format(m.inertia_))
 
     # Evaluate Trained Model
-    for x in range(0,50):
-        result = clf.predict(test_X[:,:,x].reshape(512 * 512,1)).reshape(512,512)
-        plot_result(test_X[:,:,x],result, mnames[i] + "_Kis" + str(x))
+    for x in range(X_test.shape[2]):
+        result = clf.predict(X_test[:,:,x].reshape(512 * 512,1)).reshape(512,512)
+        plot_result(X_test[:,:,x],result, mnames[i] + "_Kis" + str(x))
         
 
 # Determines optimal 'k' clusters for task at hand
